@@ -3,6 +3,8 @@ from sqlmodel import SQLModel, Field, Session, create_engine, select
 from typing import Optional, List
 from datetime import date, datetime
 from fastapi.middleware.cors import CORSMiddleware
+from database import engine
+from routers import parks
 
 app = FastAPI()
 
@@ -14,10 +16,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-sql_file = "../database/database.db"
-sqlite_url = f"sqlite:///{sql_file}"
-engine = create_engine(sqlite_url, echo=True)
-
 @app.on_event("startup")
 def on_startup():
     SQLModel.metadata.create_all(engine)
+
+app.include_router(parks.router)
