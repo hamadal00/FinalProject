@@ -1,10 +1,8 @@
-from fastapi import FastAPI,HTTPException, Request
-from sqlmodel import SQLModel, Field, Session, create_engine, select
-from typing import Optional, List
-from datetime import date, datetime
+from fastapi import FastAPI
+from sqlmodel import SQLModel
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine
-from routers import parks
+from routers import parks,activities,visitor_centers
 
 app = FastAPI()
 
@@ -21,3 +19,5 @@ def on_startup():
     SQLModel.metadata.create_all(engine)
 
 app.include_router(parks.router)
+app.include_router(activities.router)
+app.include_router(visitor_centers.router)
