@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from sqlmodel import SQLModel
 from fastapi.middleware.cors import CORSMiddleware
+from fetch_data import populate_if_empty
 from database import engine
 from routers import parks,activities,visitor_centers
 
@@ -17,6 +18,7 @@ app.add_middleware(
 @app.on_event("startup")
 def on_startup():
     SQLModel.metadata.create_all(engine)
+    populate_if_empty(engine)
 
 app.include_router(parks.router)
 app.include_router(activities.router)

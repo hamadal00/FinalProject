@@ -8,7 +8,7 @@ class Park(SQLModel, table=True):
     fullName: str
     parkCode: str
     description: str
-    latitude: float
+    latitude: str
     longitude: str
     latLong: str
     states: str
